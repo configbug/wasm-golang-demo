@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>WebAssemby con Go | @configbug</title>
+    <style>
+      @import url("https://fonts.google.com/specimen/Bai+Jamjuree?query=Cadson+Demak");
+      body {
+        font-family: "Cadson Demak", sans-serif;
+        background-color: rgb(237, 237, 237);
+      }
+      h1 {
+        font-size: 30px;
+      }
+      header {
+        text-align: center;
+        margin: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 20px;
+      }
+      button {
+        border: 2px solid #6ad7e5;
+        border-radius: 16px;
+        background-color: #6ad7e5;
+        padding: 10px 20px;
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #fff;
+      }
+      button:hover {
+        border: 2px solid #c1f8ff;
+        background-color: #6ad7e5;
+      }
+      a {
+        color: #6ad7e5;
+        font-size: 18px;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #c1f8ff;
+      }
+      .content {
+        text-align: center;
+        margin: 20px;
+        padding: 20px;
+        background-color: #ecfdff;
+        border-radius: 20px;
+      }
+      .logos {
+        font-size: 50px;
+        font-weight: bold;
+        margin: 20px 0;
+      }
+      .logos span {
+        margin: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>WebAssembly con Go</h1>
+      <div class="logos">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/WebAssembly_Logo.svg/600px-WebAssembly_Logo.svg.png"
+          height="70px"
+        />
+        <span> + </span>
+        <img
+          src="https://dc722jrlp2zu8.cloudfront.net/media/uploads/2020/08/07/golang.png"
+          height="70px"
+        />
+      </div>
+      <a href="https://twitter.com/configbug" target="_blank">by @configbug</a>
+    </header>
+    <div class="content">
+      <button id="btnRequest">Invocar Servicio desde Golang</button>
+      <div>
+        <code id="response"></code>
+      </div>
+    </div>
+
+    <script src="./wasm_exec.js"></script>
+    <script>
+      const go = new Go();
+      console.log("(Log Javascript): Cargando el archivo 'wasm' (wasm_golang.wasm)");
+      WebAssembly.instantiateStreaming(
+        fetch("wasm_golang.wasm"),
+        go.importObject
+      ).then((result) => {
+        console.log("(Log Javascript): Archivo 'wasm' (wasm_golang.wasm) cargado correctamente!");
+        go.run(result.instance);
+      });
+    </script>
+  </body>
+</html>
